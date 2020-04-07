@@ -32,7 +32,10 @@ def follow(links):
     for i in links:
         driver.get(i)
         sleep(0.5)
-        driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/span/span[1]/button').click()
-open_ins()
+        f_1 = driver.find_elements_by_xpath('//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/span/span[1]/button')
+        if len(f_1) == 1:
+            f_1[0].click()
+for i in range(10):
+    open_ins()
 sleep(10)
 driver.quit()
