@@ -5,9 +5,11 @@ from time import sleep
 from tkinter import *
 win = Tk()
 driver = webdriver.Chrome()  # Create the driver
-username = None
-password = None
+enter_user = None
+enter_pass = None
 def enter_account():  # Enter to the account
+    username = enter_user.get()
+    password = enter_pass.get()
     win.destroy()
     driver.get('https://www.instagram.com/')
     sleep(2)
@@ -46,17 +48,15 @@ def tkinter(): # make gui to get account
     win.geometry("700x600")
     Label(win,text = "<< Instagram BOT >>",fg = "purple",font = ("Aryal",32,'bold')).pack()
     Label(win,text = "Enter the Username : ",font = ("Aryal",32,'bold')).pack()
+    global enter_user
     enter_user = Entry(win,font = ("Aryal",32,'bold'),bg = "pink")
     enter_user.pack()
     Label(win,text = "Enter the Password : ",font = ("Aryal",32,'bold')).pack()
+    global enter_pass
     enter_pass = Entry(win,font = ("Aryal",32,'bold'),bg = "pink")
     enter_pass.pack()
     Label(win,text = " ",font = ("Aryal",32,'bold')).pack()
     but = Button(win,text = "ENTER",bg = "green",font = ("Aryal" ,25,'bold'))
-    global username
-    global password
-    username = enter_user.get()
-    password = enter_pass.get()
     but.config(bd = 10 ,padx = 25 ,pady = 15 ,command = enter_account ,activebackground = "red")
     but.pack()
     mainloop()
