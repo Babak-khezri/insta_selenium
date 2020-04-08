@@ -2,25 +2,22 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from random import sample
 from time import sleep
+from tkinter import *
+win = Tk()
 driver = webdriver.Chrome()  # Create the driver
-
-
-def open_ins():  # Open the instagram webpage
+username = None
+password = None
+def enter_account():  # Enter to the account
+    win.destroy()
     driver.get('https://www.instagram.com/')
-    enter_acc()
-
-
-def enter_acc():  # Enter to the account
     sleep(2)
-    driver.find_element_by_xpath('//input[@name="username"]').send_keys('selenium__py')  # Add username
-    driver.find_element_by_xpath('//input[@name="password"]').send_keys('1379bk@15')  # Add password
+    driver.find_element_by_xpath('//input[@name="username"]').send_keys(username)  # Add username
+    driver.find_element_by_xpath('//input[@name="password"]').send_keys(password)  # Add password
     driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[4]/button/div').click()  # click on log in
     sleep(3)
     # Go to explorer page to pass the welcome massage
     driver.get('https://www.instagram.com/explore/')
     finder()
-
-
 def finder():  # Search name to find profiles
     name = list("abcdefghijklmnopqrstuvwxyz")
     search = "".join(sample(name, 4))  # Create the word
@@ -36,8 +33,6 @@ def finder():  # Search name to find profiles
             if search in i.get_attribute('href') and "tags" not in i.get_attribute('href') and "locations" not in i.get_attribute('href'):
                 links.append(i.get_attribute('href'))
     follow(links)
-
-
 def follow(links):  # Go to links and follow
     sleep(1)
     for i in links:
@@ -46,9 +41,26 @@ def follow(links):  # Go to links and follow
         f_1 = driver.find_elements_by_xpath('//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/span/span[1]/button')
         if len(f_1) == 1:  # Check that account wasnt private
             f_1[0].click()  # Follow
-
+def tkinter(): # make gui to get account
+    win.title("Instagram")
+    win.geometry("700x600")
+    Label(win,text = "<< Instagram BOT >>",fg = "purple",font = ("Aryal",32,'bold')).pack()
+    Label(win,text = "Enter the Username : ",font = ("Aryal",32,'bold')).pack()
+    enter_user = Entry(win,font = ("Aryal",32,'bold'),bg = "pink")
+    enter_user.pack()
+    Label(win,text = "Enter the Password : ",font = ("Aryal",32,'bold')).pack()
+    enter_pass = Entry(win,font = ("Aryal",32,'bold'),bg = "pink")
+    enter_pass.pack()
+    Label(win,text = " ",font = ("Aryal",32,'bold')).pack()
+    but = Button(win,text = "ENTER",bg = "green",font = ("Aryal" ,25,'bold'))
+    global username
+    global password
+    username = enter_user.get()
+    password = enter_pass.get()
+    but.config(bd = 10 ,padx = 25 ,pady = 15 ,command = enter_account ,activebackground = "red")
+    but.pack()
+    mainloop()
 #Start the program
-for i in range(10):
-    open_ins()
+tkinter()
 sleep(10)
 driver.quit()  # Close the site
