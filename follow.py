@@ -1,8 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from random import sample
+from random import sample , randint
 from time import sleep
-from tkinter import *
+from tkinter import Tk ,Label ,Entry ,Button, mainloop
 win = Tk()
 driver = webdriver.Chrome()  # Create the driver
 enter_user = None
@@ -22,13 +22,14 @@ def enter_account():  # Enter to the account
     driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[4]/button/div').click()  # click on log in
     sleep(3)
     # Go to explorer page to pass the welcome massage
-    driver.get('https://www.instagram.com/explore/')
-    finder()
+    while True:
+        driver.get('https://www.instagram.com/{}/'.format(username))
+        finder()
 
 
 def finder():  # Search name to find profiles
-    name = list("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz")
-    search = "".join(sample(name, 3))  # Create the word
+    name = list("abcdefghijklmnopqrstuvwxyz")
+    search = "".join(sample(name, randint(2,4)))  # Create the word
     sleep(2)
     # Find the search bar and write the word
     driver.find_element_by_xpath('//input[@placeholder="Search"]').send_keys(search)
