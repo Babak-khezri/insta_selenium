@@ -29,7 +29,7 @@ def enter_account():  # Enter to the account
 
 def finder():  # Search name to find profiles
     name = list("abcdefghijklmnopqrstuvwxyz")
-    search = "".join(sample(name, randint(2,4)))  # Create the word
+    search = "".join(sample(name, randint(3,4)))  # Create the word
     sleep(2)
     # Find the search bar and write the word
     driver.find_element_by_xpath('//input[@placeholder="Search"]').send_keys(search)
